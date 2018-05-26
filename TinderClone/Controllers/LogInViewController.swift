@@ -18,8 +18,7 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var errorLAbel: UILabel!
     
     var signUpMode = false
-    
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         errorLAbel.isHidden = true
@@ -36,7 +35,9 @@ class LogInViewController: UIViewController {
             user.password = passwordTetField.text
             
             user.signUpInBackground { (success, error) in
+                
                 if error != nil {
+                    // sign up not successful, put code here
                     var errorMessage = "Sign up failed - Try again"
                     if let newError = error as NSError? {
                         if let detailError = newError.userInfo["error"] as? String {
@@ -46,15 +47,17 @@ class LogInViewController: UIViewController {
                     self.errorLAbel.isHidden = false
                     self.errorLAbel.text = errorMessage
                 } else {
+                    // sign up successful, put code here
                     print("sign up sucessful")
+                    self.performSegue(withIdentifier: "updateSegue", sender: nil)
                 }
             }
-        } else {
-            
+        } else {         
             if let username = usernameTextField.text,
                 let password = passwordTetField.text{
                     PFUser.logInWithUsername(inBackground: username, password: password) { (success, error) in
                         if error != nil {
+                            // Log in not succesful, put code here
                             var errorMessage = "Log in failed - Try again"
                             if let newError = error as NSError? {
                                 if let detailError = newError.userInfo["error"] as? String {
@@ -64,12 +67,19 @@ class LogInViewController: UIViewController {
                             self.errorLAbel.isHidden = false
                             self.errorLAbel.text = errorMessage
                         } else {
+                            // Log in successful, put code here
                             print("Log in sucessful")
+                            self.performSegue(withIdentifier: "updateSegue", sender: nil)
                         }
                 }
             }
         }
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if PFUser.current() != nil {
+           performSegue(withIdentifier: "updateSegue", sender: nil)
+        }
     }
     
     @IBAction func changeLogInSignUpButtonPressed(_ sender: UIButton) {
