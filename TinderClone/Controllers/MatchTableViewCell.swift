@@ -9,6 +9,7 @@
 import UIKit
 
 class MatchTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageTextField: UITextField!
