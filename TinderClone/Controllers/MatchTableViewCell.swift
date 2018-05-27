@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import Parse
 
 class MatchTableViewCell: UITableViewCell {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var messageTextField: UITextField!
+    
+    var recipientObjectId = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,5 +29,13 @@ class MatchTableViewCell: UITableViewCell {
     }
 
     @IBAction func sendButtonpressed(_ sender: UIButton) {
+        
+        let message = PFObject(className: "message")
+        
+        message["sender"] = PFUser.current()?.objectId
+        message["recipient"] = recipientObjectId
+        message["content"] = messageTextField.text
+        
+        message.saveInBackground()
     }
 }

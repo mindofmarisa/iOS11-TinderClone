@@ -12,9 +12,10 @@ import Parse
 class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-   
+    
     var userImages: [UIImage] = []
-    var UserIds: [String] = []
+    var userIds: [String] = []
+    var messages : [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +36,30 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 if let imageFile = theUser["photo"] as? PFFile {
                                     imageFile.getDataInBackground(block: { (data, error) in
                                         if let imageData = data {
-                                            if let image = UIImage(data: imageData) {                                            self.userImages.append(image)
+                                            if let image = UIImage(data: imageData) {
                                                 if let objectId = theUser.objectId {
-                                                    self.UserIds.append(objectId)
-                                                    self.tableView.reloadData()
+                                                    
+                                                    let messagesQuery = PFQuery(className: "messages")
+                                                    
+                                                    messagesQuery.whereKey("recipient", equalTo: PFUser.current()?.objectId as Any)
+                                                    messagesQuery.whereKey("sender", equalTo: theUser.objectId as Any)
+                                                    
+                                                    messagesQuery.findObjectsInBackground(block: { (objects, error) in
+                                                        var messageText = "no message from this user"
+                                                        
+                                                        if let objects = objects {
+                                                            for message in objects {
+                                                                if let content = message["content"] as? String {
+                                                                    messageText = content
+                                                                }
+                                                            }
+
+                                                        }
+                                                        self.messages.append(messageText)
+                                                        self.userIds.append(objectId)
+                                                        self.userImages.append(image)
+                                                        self.tableView.reloadData()
+                                                    })
                                                 }
                                             }
                                         }
@@ -51,8 +72,7 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
         }
         
-        print(userImages.count)
-        print(UserIds.count)
+        print(messages.count)
     }
 
 
@@ -63,8 +83,10 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if let cell = tableView.dequeueReusableCell(withIdentifier: "matchCell", for: indexPath) as? MatchTableViewCell {
-            cell.messageLabel.text = "No messages yet."
+            //cell.messageLabel.text = "No messages yet."
             cell.profileImageView.image = userImages[indexPath.row]
+            cell.recipientObjectId = userIds[indexPath.row]
+            cell.messageLabel.text = messages[indexPath.row]
             return cell
         }   
         return UITableViewCell()
