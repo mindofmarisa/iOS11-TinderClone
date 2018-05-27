@@ -55,7 +55,7 @@ class LogInViewController: UIViewController {
         } else {         
             if let username = usernameTextField.text,
                 let password = passwordTetField.text{
-                    PFUser.logInWithUsername(inBackground: username, password: password) { (success, error) in
+                    PFUser.logInWithUsername(inBackground: username, password: password) { (user, error) in
                         if error != nil {
                             // Log in not succesful, put code here
                             var errorMessage = "Log in failed - Try again"
@@ -69,7 +69,11 @@ class LogInViewController: UIViewController {
                         } else {
                             // Log in successful, put code here
                             print("Log in sucessful")
-                            self.performSegue(withIdentifier: "updateSegue", sender: nil)
+                            if user?["isFemale"] != nil {
+                                self.performSegue(withIdentifier: "loginToSwipeSegue", sender: nil)
+                            } else {
+                                self.performSegue(withIdentifier: "updateSegue", sender: nil)
+                            }
                         }
                 }
             }
@@ -78,7 +82,12 @@ class LogInViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if PFUser.current() != nil {
-           performSegue(withIdentifier: "updateSegue", sender: nil)
+            
+            if PFUser.current()?["isFemale"] != nil {
+                performSegue(withIdentifier: "loginToSwipeSegue", sender: nil)
+            } else {
+                performSegue(withIdentifier: "updateSegue", sender: nil)
+            }
         }
     }
     
