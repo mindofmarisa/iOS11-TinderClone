@@ -22,6 +22,13 @@ class ViewController: UIViewController {
         matchImageView.addGestureRecognizer(gesture)
         
         updateImage()
+        
+        PFGeoPoint.geoPointForCurrentLocation { (geoPoint, error) in
+            if let point = geoPoint {
+                PFUser.current()?["location"] = point
+                PFUser.current()?.saveInBackground()
+            }
+        }
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
@@ -93,6 +100,11 @@ class ViewController: UIViewController {
             }
             
             query.whereKey("objectId", notContainedIn: ignoredUsers)
+            
+            // select users within 10 miles
+            if let geoPoint = PFUser.current()?["location"] as? PFGeoPoint{
+                query.whereKey("location", withinGeoBoxFromSouthwest: PFGeoPoint(latitude: geoPoint.latitude - 1, longitude: geoPoint.longitude - 1), toNortheast: PFGeoPoint(latitude: geoPoint.latitude + 1, longitude: geoPoint.longitude + 1))
+            }
             
             query.limit = 1
             
