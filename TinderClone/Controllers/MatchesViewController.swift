@@ -22,14 +22,14 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         tableView.dataSource = self
         tableView.delegate = self
-        
+    
         if let query = PFUser.query() {
             query.whereKey("accepted", contains: PFUser.current()?.objectId)
             
-            if let accepted = PFUser.current()?["accepted"] as? [String] {
-                query.whereKey("objectId", containedIn: accepted)
+            if let acceptedPeeps = PFUser.current()?["accepted"] as? [String] {
+                query.whereKey("objectId", containedIn: acceptedPeeps)
                 
-                query.findObjectsInBackground { (objects, error) in
+                query.findObjectsInBackground(block: { (objects, error) in
                     if let users = objects {
                         for user in users {
                             if let theUser = user as? PFUser {
@@ -37,29 +37,31 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
                                     imageFile.getDataInBackground(block: { (data, error) in
                                         if let imageData = data {
                                             if let image = UIImage(data: imageData) {
+                                                
                                                 if let objectId = theUser.objectId {
                                                     
-                                                    let messagesQuery = PFQuery(className: "messages")
+                                                    
+                                                    let messagesQuery = PFQuery(className: "message")
                                                     
                                                     messagesQuery.whereKey("recipient", equalTo: PFUser.current()?.objectId as Any)
                                                     messagesQuery.whereKey("sender", equalTo: theUser.objectId as Any)
                                                     
                                                     messagesQuery.findObjectsInBackground(block: { (objects, error) in
-                                                        var messageText = "no message from this user"
-                                                        
+                                                        var messagetext = "No message from this user."
                                                         if let objects = objects {
                                                             for message in objects {
                                                                 if let content = message["content"] as? String {
-                                                                    messageText = content
+                                                                    messagetext = content
                                                                 }
                                                             }
-
                                                         }
-                                                        self.messages.append(messageText)
+                                                        self.messages.append(messagetext)
                                                         self.userIds.append(objectId)
                                                         self.userImages.append(image)
                                                         self.tableView.reloadData()
                                                     })
+                                                    
+                                                    
                                                 }
                                             }
                                         }
@@ -68,10 +70,9 @@ class MatchesViewController: UIViewController, UITableViewDelegate, UITableViewD
                             }
                         }
                     }
-                }
+                })
             }
         }
-        
         print(messages.count)
     }
 
