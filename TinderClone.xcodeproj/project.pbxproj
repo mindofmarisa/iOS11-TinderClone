@@ -15,6 +15,8 @@
 		A63E3A5620B9828000D6E883 /* ApiKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = A63E3A5520B9827F00D6E883 /* ApiKeys.plist */; };
 		A63E3A5820B9D73E00D6E883 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63E3A5720B9D73E00D6E883 /* LogInViewController.swift */; };
 		A63E3A5A20B9E6F200D6E883 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63E3A5920B9E6F200D6E883 /* ProfileViewController.swift */; };
+		A6DE71AF20BB2367006B1179 /* MatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DE71AE20BB2367006B1179 /* MatchesViewController.swift */; };
+		A6DE71B120BB2970006B1179 /* MatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DE71B020BB2970006B1179 /* MatchTableViewCell.swift */; };
 		C0C2508299465CA202FE613E /* Pods_TinderClone.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292A65D796C096AD473F3700 /* Pods_TinderClone.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +32,8 @@
 		A63E3A5520B9827F00D6E883 /* ApiKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKeys.plist; sourceTree = SOURCE_ROOT; };
 		A63E3A5720B9D73E00D6E883 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		A63E3A5920B9E6F200D6E883 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		A6DE71AE20BB2367006B1179 /* MatchesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchesViewController.swift; sourceTree = "<group>"; };
+		A6DE71B020BB2970006B1179 /* MatchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTableViewCell.swift; sourceTree = "<group>"; };
 		AC777E59F25A3804A11A05C3 /* Pods-TinderClone.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinderClone.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TinderClone/Pods-TinderClone.debug.xcconfig"; sourceTree = "<group>"; };
 		CD6EA0B2B528E12F8295A83A /* Pods-TinderClone.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TinderClone.release.xcconfig"; path = "Pods/Target Support Files/Pods-TinderClone/Pods-TinderClone.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +104,8 @@
 				A63E3A4320B980D400D6E883 /* ViewController.swift */,
 				A63E3A5720B9D73E00D6E883 /* LogInViewController.swift */,
 				A63E3A5920B9E6F200D6E883 /* ProfileViewController.swift */,
+				A6DE71AE20BB2367006B1179 /* MatchesViewController.swift */,
+				A6DE71B020BB2970006B1179 /* MatchTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -229,7 +235,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A63E3A4420B980D400D6E883 /* ViewController.swift in Sources */,
+				A6DE71B120BB2970006B1179 /* MatchTableViewCell.swift in Sources */,
 				A63E3A4220B980D400D6E883 /* AppDelegate.swift in Sources */,
+				A6DE71AF20BB2367006B1179 /* MatchesViewController.swift in Sources */,
 				A63E3A5A20B9E6F200D6E883 /* ProfileViewController.swift in Sources */,
 				A63E3A5820B9D73E00D6E883 /* LogInViewController.swift in Sources */,
 			);
